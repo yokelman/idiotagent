@@ -2,7 +2,7 @@
 # keep the function and parameter names the same as in tools.json
 # optionally, put the description
 
-# following code is for the example tools made available by default in tools.json
+# following code is for the example tools made available in tools.json.example
 
 def example_tool(input1, input2):
     """Yet another magnificent tool"""
