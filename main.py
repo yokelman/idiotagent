@@ -17,17 +17,10 @@ def main():
             init_prompt = prompts.init_prompt()
             if init_prompt == "NAN": sys.exit(0)
             history.append({"role": "system", "content": prompts.init_prompt()})
-        # def_working = hf_query.query(user_prompt, history, "user")
-        # try:
-        #     llm_response = json.loads(def_working)
-        #     history.append({"role": "assistant", "content": llm_response["text_reply"]})
-        #     print(def_working)
-        # except Exception as e:
-        #     print(def_working)
         llm_response = hf_query.query(user_prompt, history, "user")
         json_llm_response, history = utilities.parse_json_llm(llm_response, history)
         print("Assistant:", json_llm_response["text_reply"])
-        # handling 
+        # handling tool calls if any
         if json_llm_response["tool_calls"]:
             tool_outputs = []
             for elem in json_llm_response["tool_calls"]:
@@ -36,7 +29,6 @@ def main():
             tool_llm_response = hf_query.query(prompts.after_tool_use(tool_outputs), history, "system")
             json_tool_llm_response, history = utilities.parse_json_llm(tool_llm_response, history)
             print("Assistant:", json_tool_llm_response["text_reply"])
-
 
 if __name__ == "__main__":
     main()
