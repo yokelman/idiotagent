@@ -1,0 +1,14 @@
+[
+    {
+        "name": "example_tool",
+        "description": "Yet another magnificent tool",
+        "inputs": ["input1", "input2"],
+        "outputs": ["output1"]
+    },
+    {
+        "name": "time_check",
+        "description": "Gives current system time",
+        "inputs": [],
+        "outputs": ["system_time"]
+    }
+]

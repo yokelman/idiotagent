@@ -23,9 +23,10 @@ def init_prompt():
 You will be given user's message in the following format: {{"user_msg": <user message>}}
 You have the following tools to work with:
 {tools}
-[{{"name": "weather_check", "description": "Checks for a city's weather", "inputs": ["city_name"], "outputs": ["weather_in_celsius"]}}, {{"name": "time_check", "description": "Checks for current time", "inputs": [], "outputs": ["time"]}}]
 
+Note: If user asks something which needs tool call, give them an intermediate response notifying them that the information they have asked is being processed.
 Note: If user needs certain information for which you do not have appropriate tools and knowledge, reply by saying you don't know. Do NOT hallucinate for this situation.
+Note: If user asks something which needs tool call, but has given incomplete information (refer to inputs field of the tool) then do not decide to use that tool, instead notify the user for additional inputs needed.
 
 Your response to each message should be as follows in JSON format:
 {{"text_reply": <Your response in text if needed>, "tool_calls": <List of tools to be called and their inputs, if needed>}}
@@ -33,10 +34,10 @@ Your response to each message should be as follows in JSON format:
 Now, the conversation between the user and you begins.
 Starting now:"""
 
-def after_tool_use(tool_output):
+def after_tool_use(tool_outputs):
     return f"""Note: You are now receiving the output(s) of one/more tool call(s).
 
-{tool_output}
-[{{"tool_called": "time_check", "inputs": [], "outputs": ["3:05 P.M."]}}]
+{tool_outputs}
 
-Use the above output(s) to give an informed response to the user."""
+Use the above output(s) to give an informed response to the user.
+If output(s) has/have incomplete information then notify the user that you do not have enough information."""

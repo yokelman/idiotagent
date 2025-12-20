@@ -11,3 +11,4 @@ wheels/
 
 # stuff i added (not by uv)
 .env
+tools.json
