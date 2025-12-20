@@ -1,6 +1,5 @@
 # collection of system prompts
-# TODOOOOOO
-# REMOVE THE EXAMPLESSSS
+
 import json
 
 def get_tools():
