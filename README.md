@@ -1,5 +1,7 @@
 my attempt at a very barebones agent
 
+![Example chat](images/example.png)
+
 ## what it can do:
 - be a chatbot
 - decide tool(s) to use if any
