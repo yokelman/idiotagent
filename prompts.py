@@ -33,10 +33,13 @@ Your response to each message should be as follows in JSON format:
 Now, the conversation between the user and you begins.
 Starting now:"""
 
-def after_tool_use(tool_outputs):
+def tool_use_accept(tool_outputs):
     return f"""Note: You are now receiving the output(s) of one/more tool call(s).
 
 {tool_outputs}
 
 Use the above output(s) to give an informed response to the user.
 If output(s) has/have incomplete information then notify the user that you do not have enough information."""
+
+def tool_use_reject():
+    return "Note: The user rejected your request to use the tool. Check whether you can process the user's query without the tool, if not then notify the user you do not have enough information."
