@@ -23,10 +23,13 @@ def main():
         # handling tool calls if any
         if json_llm_response["tool_calls"]:
             tool_outputs = []
-            for elem in json_llm_response["tool_calls"]:
-                outputs = middleware.tool_call(elem["name"], elem["inputs"])
-                if outputs != "NAN": tool_outputs.append({"tool_called": elem["name"], "inputs": elem["inputs"], "outputs": outputs})
-            tool_llm_response = hf_query.query(prompts.after_tool_use(tool_outputs), history, "system")
+            for tool in json_llm_response["tool_calls"]:
+                user_confirmation = input(f"SYSTEM ALERT: Agent wants to use tool {tool["name"]} with input(s) {tool["inputs"]}. Enter nothing to confirm, and anything to reject: ")
+                if not user_confirmation:
+                    print("SYSTEM ALERT: Executing above tool...")
+                    outputs = middleware.tool_call(tool["name"], tool["inputs"])
+                    if outputs != "NAN": tool_outputs.append({"tool_called": tool["name"], "inputs": tool["inputs"], "outputs": outputs})
+            tool_llm_response = hf_query.query(prompts.tool_use_accept(tool_outputs), history, "system")
             json_tool_llm_response, history = utilities.parse_json_llm(tool_llm_response, history)
             print("Assistant:", json_tool_llm_response["text_reply"])
 
