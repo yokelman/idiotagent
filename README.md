@@ -4,7 +4,7 @@ my attempt at a very barebones agent
 
 ## what it can do:
 - be a chatbot
-- decide tool(s) to use if any
+- decide tool(s) to use if any with user consent
 - run tools and give output back to llm
 
 ## what it cannot do:
